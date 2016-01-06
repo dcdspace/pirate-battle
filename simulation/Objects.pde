@@ -1,19 +1,40 @@
 class Ball {
   int radius;
-  Location position;
+  PVector position;
   color ballColor;
-  Velocity initialV;
-  Velocity finalV;
-  Ball(int ballRadius, int x, int y, Velocity startVelocity) {
+  PVector initialV;
+  PVector finalV;
+  PVector accel;
+  Ball(int ballRadius, int x, int y, PVector startVelocity) {
     radius = ballRadius;
-    position = new Location(x, y);
+    position = new PVector(x, y);
     initialV = startVelocity;
+  }
+  void draw() {
   }
 }
 
 class Ship {
-  Location position;
+  PVector position;
   int health;
+  Ship(int x, int y) {
+    position = new PVector(x, y);
+  }
+  void draw() {
+    rect(position.x, position.y, shipWidth, shipHeight);
+  }
+}
+
+class Cannon {
+  PVector position;
+  Ball ball;
+  Cannon(int x, int y, Ball cannonBall) {
+    position = new PVector(x, y);
+    ball = cannonBall;
+  }
+  void draw() {
+    
+  }
 }
 
 class Player {
@@ -21,21 +42,4 @@ class Player {
   int score;
   Ball myBall;
   int lives;
-  
-}
-
-class Location {
-  int x;
-  int y;
-  Location(int startX, int startY) {
-    x = startX;
-    y = startY;
-  }
-}
-
-class Velocity {
-  int x;
-  int y;
-  float a = -9.8;
-  float angle;
 }
