@@ -1,16 +1,23 @@
 class Ball {
-  int radius;
   PVector position;
   color ballColor;
-  PVector initialV;
+  PVector v;
   PVector finalV;
   PVector accel;
-  Ball(int ballRadius, int x, int y, PVector startVelocity) {
-    radius = ballRadius;
-    position = new PVector(x, y);
-    initialV = startVelocity;
+  Ball (PVector startPosition, PVector startVelocity) {
+    position = startPosition;
+    v = startVelocity;
+    draw();
   }
   void draw() {
+    fill(252, 10, 39);
+    ellipse(position.x, position.y, 30, 30);
+  }
+
+  void move() {
+    v.y += .1;
+    position.x += v.x;
+    position.y += v.y;
   }
 }
 
@@ -25,6 +32,7 @@ class Ship {
     cannon = new Cannon(int(position.x + shipWidth/2), int(position.y - 15), isFlipped);
   }
   void draw() {
+    fill(255);
     rectMode(CORNER);
     rect(position.x, position.y, shipWidth, shipHeight);
     cannon.draw();
@@ -35,9 +43,11 @@ class Cannon {
   PVector position;
   Ball ball;
   boolean flipped;
+  boolean loaded;
   Cannon(int x, int y, boolean isFlipped) {
     position = new PVector(x, y);
     flipped = isFlipped;
+    load();
   }
   void draw() {
     //base of cannon
@@ -72,6 +82,16 @@ class Cannon {
     fill(150);
     stroke(0);
     ellipse(position.x + 60, position.y - 20, 12, 24);
+    ball.draw();
+  }
+
+  void load() {
+    ball = new Ball(new PVector(position.x + 60, position.y - 20), new PVector(5, 0));
+    loaded = true;
+  }
+
+  void fire() {
+    ball.move();
   }
 }
 
@@ -80,4 +100,9 @@ class Player {
   int score;
   Ball myBall;
   int lives;
+}
+
+void keyPressed() {
+  if (key == ' ') {
+  }
 }

@@ -11,4 +11,8 @@ class GameController {
       ship.draw();
     }
   }
+  
+  void fire() {
+    ships.get(0).cannon.fire();
+  }
 }
