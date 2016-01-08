@@ -18,3 +18,10 @@ void draw() {
 void mousePressed() {
   println("x: " + mouseX + " y: " + mouseY);
 }
+
+
+void keyPressed() {
+  if (key == ' ') {
+    game.fire();
+  }
+}

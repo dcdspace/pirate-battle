@@ -4,20 +4,40 @@ class Ball {
   PVector v;
   PVector finalV;
   PVector accel;
-  Ball (PVector startPosition, PVector startVelocity) {
+  boolean fired;
+  boolean visible;
+  boolean flipped;
+  Ball (PVector startPosition, PVector startVelocity, boolean isFlipped) {
     position = startPosition;
     v = startVelocity;
+    visible = true;
+    flipped = isFlipped;
     draw();
   }
   void draw() {
     fill(252, 10, 39);
-    ellipse(position.x, position.y, 30, 30);
+    if (visible) {
+      ellipse(position.x, position.y, 30, 30);
+    }
+    if (fired) {
+      move();
+    }
   }
 
   void move() {
+    if (flipped) {
+      position.x -= v.x;
+    } else {
+      position.x += v.x;
+    }
     v.y += .1;
-    position.x += v.x;
     position.y += v.y;
+    if (position.y > height) {
+      print("off screen");
+      visible = false;
+      fired = false;
+      game.nextTurn();
+    }
   }
 }
 
@@ -49,7 +69,7 @@ class Cannon {
   Cannon(int x, int y, boolean isFlipped) {
     position = new PVector(x, y);
     flipped = isFlipped;
-    load();
+    loaded = false;
   }
   void draw() {
     if (flipped) {
@@ -86,7 +106,7 @@ class Cannon {
       fill(150);
       rect(14, 20, 98 + 10, 15 + 10);
       popMatrix();
-      
+
       //firing point
       pushMatrix();
       translate(position.x, position.y);
@@ -97,10 +117,6 @@ class Cannon {
       stroke(0);
       ellipse(65, 20, 12, 24);
       popMatrix();
-      
-      
-      
-      
     } else {
       //base of cannon
       rectMode(CENTER);
@@ -134,17 +150,25 @@ class Cannon {
       fill(150);
       stroke(0);
       ellipse(position.x + 60, position.y - 20, 12, 24);
+    }
+    if (loaded) {
       ball.draw();
     }
   }
 
   void load() {
-    ball = new Ball(new PVector(position.x + 60, position.y - 20), new PVector(5, 0));
+    int v = 7;
+    if (flipped) {
+      print("flipped ball");
+      ball = new Ball(new PVector(position.x - 60, position.y - 20), new PVector(v, 0), true);
+    } else {
+      ball = new Ball(new PVector(position.x + 60, position.y - 20), new PVector(v, 0), false);
+    }
     loaded = true;
   }
 
   void fire() {
-    ball.move();
+    ball.fired = true;
   }
 }
 
@@ -153,9 +177,9 @@ class Player {
   int score;
   Ball myBall;
   int lives;
-}
-
-void keyPressed() {
-  if (key == ' ') {
+  boolean active;
+  Ship ship;
+  Player() {
+    active = false;
   }
 }
