@@ -35,6 +35,12 @@ void draw() {
   rectMode(CENTER);
   fill(150);
   rect(410, 290, 300, 80);
+  pushMatrix();
+  translate(420,330);
+  rotate(PI);
+  rectMode(CORNER);
+  rect(0,0,300, 80);
+  popMatrix();
   
   
   //fire point of cannon
@@ -45,4 +51,7 @@ void draw() {
   ellipse(555, 290, 40, 80);
   
   
+}
+void mousePressed() {
+  println("x: " + mouseX + " y: " + mouseY);
 }
