@@ -2,14 +2,17 @@ class Ball {
   PVector position;
   color ballColor;
   PVector v;
-  PVector finalV;
   PVector accel;
+  PVector translation;
   boolean fired;
   boolean visible;
   boolean flipped;
-  Ball (PVector startPosition, PVector startVelocity, boolean isFlipped) {
+  float launchAngle;
+  int power = 7;
+  Ball (PVector startPosition, PVector startVelocity, PVector ballTranslation, boolean isFlipped) {
     position = startPosition;
     v = startVelocity;
+    translation = ballTranslation;
     visible = true;
     flipped = isFlipped;
     draw();
@@ -17,27 +20,71 @@ class Ball {
   void draw() {
     fill(252, 10, 39);
     if (visible) {
+      pushMatrix();
+      translate(translation.x, translation.y);
+      if (!fired) {
+        if (mouseY < 277) {
+          if (flipped) {
+            launchAngle = abs(radians((277)));
+          } else {
+            launchAngle = abs(radians(-(277)));
+          }
+        } else if (mouseY >= 359) {
+          launchAngle = 0;
+        } else {
+          launchAngle = abs(radians(-(mouseY)));
+        }
+        if (flipped) {
+          rotate(-launchAngle + PI);
+        } else {
+          rotate(launchAngle);
+        }
+      } else {
+        if (flipped) {
+          rotate((-launchAngle + PI));
+        } else {
+          rotate(launchAngle);
+        }
+      }
       ellipse(position.x, position.y, 30, 30);
+      popMatrix();
     }
     if (fired) {
       move();
     }
   }
 
+  void fire(float angle) {
+    launchAngle = angle;
+    v.x=abs(power*cos(2*PI - launchAngle));
+    v.y=-abs(power*sin(2*PI - launchAngle));
+    print(" angle: " + degrees(launchAngle));
+    println(" xv: " + v.x + " yv: " + v.y);
+    fired = true;
+  }
+
   void move() {
     if (flipped) {
-      position.x -= v.x;
+      position.x += v.x;
     } else {
       position.x += v.x;
     }
-    v.y += .1;
-    position.y += v.y;
-    if (position.y > height) {
-      print("off screen");
+    v.y += .3;
+    if (flipped) {
+      position.y -= v.y;
+    } else {
+      position.y += v.y;
+    }
+    println(position.y);
+    pushMatrix();
+    translate(position.x, position.y);
+    if (abs(position.y)-300 > height) {
+      //print("off screen");
       visible = false;
       fired = false;
       game.nextTurn();
     }
+    popMatrix();
   }
 }
 
@@ -66,6 +113,7 @@ class Cannon {
   Ball ball;
   boolean flipped;
   boolean loaded;
+  float angle;
   Cannon(int x, int y, boolean isFlipped) {
     position = new PVector(x, y);
     flipped = isFlipped;
@@ -92,30 +140,42 @@ class Cannon {
 
       //bottom of shaft
       pushMatrix();
-      translate(position.x, position.y);
-      rotate(PI);
-      arc(-40, 20, 30*.8, 24.5, PI/2, (3*PI)/2, OPEN);
-      popMatrix();
+      translate(920, 392);
+      if (loaded) {
+        if (mouseY < 277) {
+          angle = abs(radians((277)));
+        } else if (mouseY >= 359) {
+          rotate(0);
+          angle = 0;
+        } else {
+          angle = abs(radians(-(mouseY)));
+        }
+      } else {
+        if (angle < radians(360) && angle != 0) {
+          angle += radians(1);
+          //rotate(angle);
+          println("angle2: " + degrees(angle));
+        }
+        else {
+          rotate(0);
+        }
+      } 
+      rotate(-angle + PI);
+      arc(0, 0, 30*.8, 24.5, PI/2, (3*PI)/2, OPEN);
 
       //cannon shaft 
-      pushMatrix();
-      translate(position.x, position.y);
-      rotate(PI);
 
       rectMode(CENTER);
       fill(150);
-      rect(14, 20, 98 + 10, 15 + 10);
-      popMatrix();
+      rect(50, 0, 98 + 10, 15 + 10);
 
       //firing point
-      pushMatrix();
-      translate(position.x, position.y);
       rotate(PI);
       ellipseMode(CENTER);
       noStroke();
       fill(150);
       stroke(0);
-      ellipse(65, 20, 12, 24);
+      ellipse(-100, 0, 12, 24);
       popMatrix();
     } else {
       //base of cannon
@@ -137,19 +197,45 @@ class Cannon {
 
       //bottom of cannon shaft
       //rotate(-PI/10);
-      arc(position.x - 40, position.y - 20, 30*.8, 24.5, PI/2, (3*PI)/2, OPEN);
+      pushMatrix();
+      translate(79, 393);
+      if (loaded) {
+        if (mouseY < 277) {
+          rotate(abs(radians(-(277))));
+          angle = abs(radians(-(277)));
+        } else if (mouseY >= 359) {
+          rotate(0);
+          angle = 0;
+        } else {
+          rotate(abs(radians(-(mouseY))));
+          angle = abs(radians(-(mouseY)));
+        }
+      } else {
+        if (angle < radians(360)) {
+          angle += radians(1);
+          rotate(angle);
+          println("angle1: " + angle);
+        }
+        else {
+          rotate(0);
+        }
+      }
+      //print("rotating " + (degrees(angle)));
+
+      arc(0, 0, 30*.8, 24.5, PI/2, (3*PI)/2, OPEN);
 
       //cannon shaft 
       rectMode(CENTER);
       fill(150);
-      rect(position.x + 10, position.y - 20, 98 + 10, 15 + 10);
+      rect(50, 0, 98 + 10, 15 + 10);
 
       //fire point of cannon
       ellipseMode(CENTER);
       noStroke();
       fill(150);
       stroke(0);
-      ellipse(position.x + 60, position.y - 20, 12, 24);
+      ellipse(100, 0, 12, 24);
+      popMatrix();
     }
     if (loaded) {
       ball.draw();
@@ -157,18 +243,21 @@ class Cannon {
   }
 
   void load() {
-    int v = 7;
+    int v = 4;
+    //print("loading");
     if (flipped) {
-      print("flipped ball");
-      ball = new Ball(new PVector(position.x - 60, position.y - 20), new PVector(v, 0), true);
+      //print("flipped ball");
+      ball = new Ball(new PVector(100, 0), new PVector(v, 0), new PVector(920, 392), true);
     } else {
-      ball = new Ball(new PVector(position.x + 60, position.y - 20), new PVector(v, 0), false);
+      ball = new Ball(new PVector(100, 0), new PVector(v, 0), new PVector(79, 393), false);
     }
     loaded = true;
   }
 
   void fire() {
-    ball.fired = true;
+    if (ball.fired == false) {
+      ball.fire(angle);
+    }
   }
 }
 

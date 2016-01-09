@@ -19,7 +19,7 @@ class GameController {
       ship.draw();
     }
     if (currentPlayer.ship.cannon.loaded == false) {
-    currentPlayer.ship.cannon.load();
+      currentPlayer.ship.cannon.load();
     }
   }
 
@@ -29,6 +29,8 @@ class GameController {
 
   void nextTurn() {
     currentPlayer.active = false;
+    currentPlayer.ship.cannon.loaded = false;
+
     if (currentPlayer == player1) {
       currentPlayer = player2;
     } else {

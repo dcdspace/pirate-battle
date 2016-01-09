@@ -8,6 +8,7 @@ void setup() {
   Ship ship1 = new Ship(0, height - shipHeight, false);
   Ship ship2 = new Ship(width-shipWidth, height - shipHeight, true);
   game = new GameController(ship1, ship2);
+  cursor(CROSS);
 }
 
 void draw() {
