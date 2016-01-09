@@ -40,3 +40,16 @@ class GameController {
     currentPlayer.active = true;
   }
 }
+
+
+class Player {
+  int accuracy;
+  int score;
+  Ball myBall;
+  int lives;
+  boolean active;
+  Ship ship;
+  Player() {
+    active = false;
+  }
+}
