@@ -44,7 +44,7 @@ class Cannon {
         if (angle < radians(360) && angle != 0) {
           angle += radians(1);
           //rotate(angle);
-          println("angle2: " + degrees(angle));
+          //println("angle2: " + degrees(angle));
         } else {
           rotate(0);
         }
@@ -103,7 +103,7 @@ class Cannon {
         if (angle < radians(360) && angle != 0) {
           angle += radians(1);
           rotate(angle);
-          println("angle1: " + angle);
+          //println("angle1: " + angle);
         } else {
           rotate(0);
         }
@@ -139,6 +139,7 @@ class Cannon {
     } else {
       ball = new Ball(new PVector(100, 0), new PVector(v, 0), new PVector(79, 393), false);
     }
+    
     loaded = true;
   }
 

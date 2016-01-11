@@ -20,12 +20,16 @@ void setup() {
 
 void draw() {
   background(28, 158, 255);
+  game.drawBoard();
   img3.resize(width/2, 150);
   image(img3, 0, 450);
 
   img4.resize(width/2, 150);
   image(img3, width/2, 450);
-  game.drawBoard();
+}
+
+float truncate(float x) {
+    return round( x * 100.0f ) / 100.0f;
 }
 
 void mousePressed() {

@@ -58,8 +58,8 @@
     launchAngle = angle;
     v.x=abs(power*cos(2*PI - launchAngle));
     v.y=-abs(power*sin(2*PI - launchAngle));
-    print(" angle: " + degrees(launchAngle));
-    println(" xv: " + v.x + " yv: " + v.y);
+    //print(" angle: " + degrees(launchAngle));
+    //println(" xv: " + v.x + " yv: " + v.y);
     fired = true;
   }
 
@@ -75,7 +75,7 @@
     } else {
       position.y += v.y;
     }
-    println(position.y);
+    //println(position.y);
     pushMatrix();
     translate(position.x, position.y);
     if (abs(position.y)-300 > height) {
@@ -86,4 +86,5 @@
     }
     popMatrix();
   }
+  
 }
