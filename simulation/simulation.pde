@@ -1,3 +1,10 @@
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
+
 //GLOBALS
 GameController game;
 int shipWidth = 250;
@@ -8,13 +15,6 @@ PImage img2;
 PImage img3;
 PImage img4;
 PImage background;
-
-import ddf.minim.*;
-import ddf.minim.analysis.*;
-import ddf.minim.effects.*;
-import ddf.minim.signals.*;
-import ddf.minim.spi.*;
-import ddf.minim.ugens.*;
 
 Minim minim;
 AudioPlayer pearl;
@@ -29,6 +29,9 @@ void setup() {
   img3 = loadImage("waves2.png");
   img4 = loadImage("waves2.png");
   background = loadImage("storm.jpg");
+  minim = new Minim(this);
+  pearl = minim.loadFile("pirates.mp3");
+  pearl.loop();
 }
 
 void draw() {
@@ -43,8 +46,6 @@ void draw() {
   image(img3, width/2, 450);
 
 
-  pearl = minim.loadFile("The Black Pearl.mp3");
-  pearl.play();
 
 
   if (!firstShot) {
