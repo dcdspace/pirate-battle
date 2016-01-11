@@ -9,6 +9,16 @@ PImage img3;
 PImage img4;
 PImage background;
 
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
+
+Minim minim;
+AudioPlayer pearl;
+
 void setup() {
   size(1000, 600);
   Ship ship1 = new Ship(new PVector (0, height - shipHeight), 200, 425, 10, 425, 30, 525, 120, 525, false);
@@ -31,6 +41,11 @@ void draw() {
 
   img4.resize(width/2, 150);
   image(img3, width/2, 450);
+
+
+  pearl = minim.loadFile("The Black Pearl.mp3");
+  pearl.play();
+
 
   if (!firstShot) {
     textSize(30);
