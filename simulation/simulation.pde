@@ -2,6 +2,7 @@
 GameController game;
 int shipWidth = 250;
 int shipHeight = 175;
+boolean firstShot = false;
 PImage img;
 PImage img2;
 PImage img3;
@@ -26,6 +27,16 @@ void draw() {
 
   img4.resize(width/2, 150);
   image(img3, width/2, 450);
+  
+  if(!firstShot){
+    textSize(30);
+    textAlign(CENTER);
+    text("Instructions:", width/2, (height/2)-20);
+    textSize(20);
+    text("Use Mouse to alter firing angle", width/2, (height/2));
+    textSize(20);
+    text("Use UP and Down arrows to alter initial velocity", width/2, (height/2)+20);
+  }
 }
 
 float truncate(float x) {
@@ -44,5 +55,6 @@ void mousePressed() {
 void keyPressed() {
   if (key == ' ') {
     game.fire();
+    firstShot = true;
   }
 }

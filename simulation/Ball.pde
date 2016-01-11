@@ -47,13 +47,21 @@ class Ball {
           //rotate(launchAngle);
         }
       }
-      ellipse(position.x, position.y, 30, 30);
       if (!fired) {
         popMatrix();
       }
     }
     if (fired) {
+      ellipse(position.x, position.y, 30, 30);
       move();
+    }
+    if (keyPressed) {
+      if (keyCode == UP && power < 22) {
+        power++;
+      }
+      if (keyCode ==DOWN && power > 0) {
+        power--;
+      }
     }
   }
 
@@ -62,7 +70,7 @@ class Ball {
 
     println("p.xi = " + position.x);
     if (flipped) {
-      position = originalVector(position, translation, -launchAngle + PI);
+      position = originalVector(position, translation, PI - launchAngle);
       print("new position: " + position);
     } else {
       position = originalVector(position, translation, 2*PI - launchAngle);
