@@ -32,7 +32,7 @@ class Ship {
     } else {
       rect(80, 356, 10, 140);
     }
-    fill(0);
+    fill(255, 252, 237);
     img.resize(100, 50);
     if (flipped) {
       triangle(960, 375, 922, 280, 884, 375);

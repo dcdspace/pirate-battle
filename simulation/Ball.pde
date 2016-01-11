@@ -2,7 +2,7 @@ class Ball {
   PVector position;
   color ballColor;
   PVector v;
-  PVector accel;
+  float accel = .2;
   PVector translation;
   boolean fired;
   boolean visible;
@@ -57,10 +57,16 @@ class Ball {
     }
     if (keyPressed) {
       if (keyCode == UP && power < 22) {
-        power++;
+        power += 0.5;
       }
       if (keyCode ==DOWN && power > 0) {
-        power--;
+        power -= 0.5;
+      }
+      if (keyCode == LEFT && accel > .1) {
+        accel -= 0.05;
+      }
+      if (keyCode == RIGHT && accel < .5) {
+        accel += 0.05;
       }
     }
   }
@@ -86,7 +92,7 @@ class Ball {
   void move() {
     println("p.x = " + position.x);
 
-    v.y -= .2;
+    v.y -= accel;
     println(" xv: " + v.x + " yv: " + v.y);
 
     if (flipped) {

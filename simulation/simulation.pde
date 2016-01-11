@@ -7,6 +7,7 @@ PImage img;
 PImage img2;
 PImage img3;
 PImage img4;
+PImage background;
 
 void setup() {
   size(1000, 600);
@@ -17,34 +18,41 @@ void setup() {
   img = loadImage("skulls.png");
   img3 = loadImage("waves2.png");
   img4 = loadImage("waves2.png");
+  background = loadImage("storm.jpg");
 }
 
 void draw() {
+  background.resize(width, height);
   background(28, 158, 255);
+  image(background, 0, 0);
   game.drawBoard();
   img3.resize(width/2, 150);
   image(img3, 0, 450);
 
   img4.resize(width/2, 150);
   image(img3, width/2, 450);
-  
-  if(!firstShot){
+
+  if (!firstShot) {
     textSize(30);
     textAlign(CENTER);
-    text("Instructions:", width/2, (height/2)-20);
+    text("Instructions:", width/2, (height/2)-80);
     textSize(20);
-    text("Use Mouse to alter firing angle", width/2, (height/2));
+    text("Use Mouse to alter firing angle", width/2, (height/2)-60);
     textSize(20);
-    text("Use UP and Down arrows to alter initial velocity", width/2, (height/2)+20);
+    text("Use UP and DOWN arrows to alter initial velocity", width/2, (height/2) - 40);
+    text("Use LEFT and RIGHT arrows to alter downward acceleration", width/2, (height/2) - 20);
+    text("Press SPACE to fire", width/2, (height/2));
+    textSize(15);
+    text("Press \"r\" to restart", width/2, (height/2)+20);
   }
 }
 
 float truncate(float x) {
-    return round( x * 100.0f ) / 100.0f;
+  return round( x * 100.0f ) / 100.0f;
 }
 
 PVector originalVector (PVector rotated, PVector translate, float rotateAngle) {
-return new PVector(translate.x + cos(rotateAngle) * rotated.y, (translate.y + sin(rotateAngle) * rotated.y));
+  return new PVector(translate.x + cos(rotateAngle) * rotated.y, (translate.y + sin(rotateAngle) * rotated.y));
 }
 
 void mousePressed() {
@@ -56,5 +64,7 @@ void keyPressed() {
   if (key == ' ') {
     game.fire();
     firstShot = true;
+  } else if (key == 'r') {
+    game.restart();
   }
 }
