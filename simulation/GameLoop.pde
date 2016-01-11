@@ -76,8 +76,7 @@ class GameController {
     Ship currentShip;
     if (currentPlayer == player1) {
       currentShip = player2.ship;
-      translation = new PVector(79, 393);
-      if (currentBall.position.x + translation.x >= currentShip.x1 && currentBall.position.y >= currentShip.y1 && currentBall.position.y <= currentShip.y1 + 20) {
+      if (currentBall.position.x >= currentShip.x1 && currentBall.position.y >= currentShip.y1 && currentBall.position.y <= currentShip.y1 + 20) {
         println("ball position: " + currentBall.position.y);
         currentPlayer.ship.cannon.ball.visible = false;
         currentPlayer.ship.cannon.ball.fired = false;
@@ -86,8 +85,7 @@ class GameController {
       }
     } else {
       currentShip = player1.ship;
-      translation = new PVector(920, 392);
-      if (translation.x - currentBall.position.x <= currentShip.x1 && -currentBall.position.y >= currentShip.y1 && -currentBall.position.y <= currentShip.y1 + 20) {
+      if (currentBall.position.x <= currentShip.x1 && currentBall.position.y >= currentShip.y1 && currentBall.position.y <= currentShip.y1 + 20) {
         println("ball position: " + (-currentBall.position.y));
         println("ship position: " + currentShip.y1);
         currentPlayer.ship.cannon.ball.visible = false;

@@ -32,6 +32,10 @@ float truncate(float x) {
     return round( x * 100.0f ) / 100.0f;
 }
 
+PVector originalVector (PVector rotated, PVector translate, float rotateAngle) {
+return new PVector(translate.x + cos(rotateAngle) * rotated.y, (translate.y + sin(rotateAngle) * rotated.y));
+}
+
 void mousePressed() {
   println("x: " + mouseX + " y: " + mouseY);
 }
