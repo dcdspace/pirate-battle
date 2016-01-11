@@ -8,7 +8,7 @@ class Ball {
   boolean visible;
   boolean flipped;
   float launchAngle;
-  float power = 0;
+  float power = 12;
   Ball (PVector startPosition, PVector startVelocity, PVector ballTranslation, boolean isFlipped) {
     position = startPosition;
     v = startVelocity;

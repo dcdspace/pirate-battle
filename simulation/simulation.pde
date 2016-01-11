@@ -30,7 +30,7 @@ void setup() {
   img4 = loadImage("waves2.png");
   background = loadImage("storm.jpg");
   minim = new Minim(this);
-  pearl = minim.loadFile("pirates.mp3");
+  pearl = minim.loadFile("piratesNew.mp3");
   pearl.loop();
 }
 
