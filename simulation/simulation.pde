@@ -18,6 +18,7 @@ PImage background;
 
 Minim minim;
 AudioPlayer pearl;
+AudioPlayer shotSound;
 
 void setup() {
   size(1000, 600);
@@ -79,6 +80,9 @@ void mousePressed() {
 void keyPressed() {
   if (key == ' ') {
     game.fire();
+    
+  pearl = minim.loadFile("cannon sound.mp3");
+  pearl.play();
     firstShot = true;
   } else if (key == 'r') {
     game.restart();
