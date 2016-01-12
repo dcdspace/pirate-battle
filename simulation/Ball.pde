@@ -14,14 +14,14 @@ class Ball {
     v = startVelocity;
     translation = ballTranslation;
     visible = true;
-    flipped = isFlipped;
+    flipped = isFlipped; //see if it is the second player's
     draw();
   }
   void draw() {
     fill(252, 10, 39);
     if (visible) {
       if (!fired) {
-        pushMatrix();
+        pushMatrix(); //keep ball fixed to cannon while rotating
         translate(translation.x, translation.y);
         if (mouseY < 277) {
           if (flipped) {
@@ -39,14 +39,7 @@ class Ball {
         } else {
           rotate(launchAngle);
         }
-      } else {
-        if (flipped) {
-          //rotate((-launchAngle + PI));
-          //position = originalVector(position, translation, -launchAngle + PI);
-        } else {
-          //rotate(launchAngle);
-        }
-      }
+      } 
       if (!fired) {
         popMatrix();
       }
@@ -55,7 +48,7 @@ class Ball {
       ellipse(position.x, position.y, 30, 30);
       move();
     }
-    if (keyPressed) {
+    if (keyPressed) { //adjust velocity and acceleration of ball with keys
       if (keyCode == UP && power < 22) {
         power += 0.5;
       }
@@ -74,43 +67,32 @@ class Ball {
   void fire(float angle) {
     launchAngle = angle;
 
-    println("p.xi = " + position.x);
     if (flipped) {
-      position = originalVector(position, translation, PI - launchAngle);
-      print("new position: " + position);
+      position = originalVector(position, translation, PI - launchAngle); //get the untranslated/rotated coordinates of ball
     } else {
       position = originalVector(position, translation, 2*PI - launchAngle);
     }
-    print("angle: " + int(degrees(2*PI - launchAngle)));
-    v.x=abs(power*cos(2*PI - launchAngle));
-    println("v.x = " + v.x);
-    v.y=abs(power*sin(2*PI -launchAngle));
-    //print(" angle: " + degrees(launchAngle));
-    fired = true;
+    v.x=abs(power*cos(2*PI - launchAngle)); //get initial x velocity based on launch angle
+    v.y=abs(power*sin(2*PI -launchAngle)); //get initial y velocity based on launch angle
+    fired = true; //ball has been fired from cannon and is now in play
   }
 
   void move() {
-    println("p.x = " + position.x);
-
-    v.y -= accel;
-    println(" xv: " + v.x + " yv: " + v.y);
-
-    if (flipped) {
-      position.y -= v.y;
+    //println("p.y = " + position.y);
+    v.y -= accel; //downwards gravitational acceleration acting on y component of velocity
+    //println(" xv: " + v.x + " yv: " + v.y);
+    if (flipped) { //either add x if going right or subtract for left
       position.x -= v.x;
     } else {
-      position.y -= v.y;
       position.x += v.x;
     }
-    //println(position.y);
-    //pushMatrix();
-    //translate(position.x, position.y);
-    if (abs(position.y)-300 > height) {
-      //print("off screen");
+    position.y -= v.y; // add y velocity to position, accounting for acceleration
+
+    if (abs(position.y) > height) { //ball hit water
       visible = false;
       fired = false;
+      splash.trigger();
       game.nextTurn();
     }
-    //popMatrix();
   }
 }

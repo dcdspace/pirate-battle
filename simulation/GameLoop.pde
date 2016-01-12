@@ -3,7 +3,7 @@ class GameController {
   Player player1;
   Player player2;
   Player currentPlayer;
-  ArrayList<Ship> ships = new ArrayList<Ship>();
+  ArrayList<Ship> ships = new ArrayList<Ship>(); //ships for both players
   GameController(Ship ship1, Ship ship2) {
     ships.add(ship1);
     ships.add(ship2);
@@ -20,7 +20,7 @@ class GameController {
       ship.draw();
     }
     if (currentPlayer.ship.cannon.loaded == false) {
-      currentPlayer.ship.cannon.load();
+      currentPlayer.ship.cannon.load(); //load ball in cannon
     }
     checkCollisions();
 
@@ -70,7 +70,7 @@ class GameController {
     currentPlayer.ship.cannon.fire();
   }
 
-  void nextTurn() {
+  void nextTurn() { //switch current players
     currentPlayer.active = false;
     currentPlayer.ship.cannon.loaded = false;
 
@@ -83,40 +83,44 @@ class GameController {
     currentPlayer.active = true;
   }
 
-  void restart() {
-    player1.score = 0;
-    player2.score = 0;
-    currentPlayer.active = false;
-    currentPlayer.ship.cannon.loaded = false;
-    currentPlayer = player1;
-    currentPlayer.active = true;
+  void restart() { //starts a new game
     firstShot = false;
+    pearl.rewind();
+    newGame();
   }
 
-  void checkCollisions() {
-    Ball currentBall = currentPlayer.ship.cannon.ball;
-    //println("ball position: " + currentBall.position);
-    PVector translation;
-    Ship currentShip;
+  void checkCollisions() { //check if ball hit ship
+    Ball currentBall = currentPlayer.ship.cannon.ball;//current player's cannon ball
+    Ship currentShip; //target ship (opponent's ship)
+    boolean hitShip = false;
     if (currentPlayer == player1) {
       currentShip = player2.ship;
       if (currentBall.position.x >= currentShip.x1 && currentBall.position.y >= currentShip.y1 && currentBall.position.y <= currentShip.y1 + 20) {
         println("ball position: " + currentBall.position.y);
-        currentPlayer.ship.cannon.ball.visible = false;
-        currentPlayer.ship.cannon.ball.fired = false;
-        currentPlayer.score ++;
-        nextTurn();
+        hitShip = true;
       }
     } else {
       currentShip = player1.ship;
       if (currentBall.position.x <= currentShip.x1 && currentBall.position.y >= currentShip.y1 && currentBall.position.y <= currentShip.y1 + 20) {
-        println("ball position: " + (-currentBall.position.y));
-        println("ship position: " + currentShip.y1);
-        currentPlayer.ship.cannon.ball.visible = false;
-        currentPlayer.ship.cannon.ball.fired = false;
-        currentPlayer.score ++;
-        nextTurn();
+        hitShip = true;
       }
+    }
+    if (hitShip) {
+      currentPlayer.ship.cannon.ball.visible = false;
+      currentPlayer.ship.cannon.ball.fired = false;
+      currentPlayer.score ++;
+      hit.trigger();
+      nextTurn();
+      currentShip.y1 += 10; //move ship down
+      currentShip.y2 += 10;
+      currentShip.y3 += 10;
+      currentShip.y4 += 10;
+      currentShip.cannon.position.y += 10;
+      currentShip.cannon.yStart += 10;
+      currentShip.i1 += 10;
+      currentShip.t1 += 10;
+      currentShip.t2 += 10;
+      currentShip.t3 += 10;
     }
   }
 }

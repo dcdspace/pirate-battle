@@ -4,10 +4,12 @@ class Cannon {
   boolean flipped;
   boolean loaded;
   float angle;
+  int yStart;
   Cannon(int x, int y, boolean isFlipped) {
     position = new PVector(x, y);
     flipped = isFlipped;
     loaded = false;
+    yStart = 392;
   }
   void draw() {
     if (flipped) {
@@ -30,10 +32,10 @@ class Cannon {
 
       //bottom of shaft
       pushMatrix();
-      translate(920, 392);
+      translate(920, yStart);
       if (loaded) {
-        if (mouseY < 277) {
-          angle = abs(radians((277)));
+        if (mouseY < 277) { //rotate cannon to mouse angle
+          angle = abs(radians((277))); 
         } else if (mouseY >= 359) {
           rotate(0);
           angle = 0;
@@ -41,10 +43,8 @@ class Cannon {
           angle = abs(radians(-(mouseY)));
         }
       } else {
-        if (angle < radians(360) && angle != 0) {
+        if (angle < radians(360) && angle != 0) { // animate cannon down
           angle += radians(1);
-          //rotate(angle);
-          //println("angle2: " + degrees(angle));
         } else {
           rotate(0);
         }
@@ -85,9 +85,8 @@ class Cannon {
       ellipse(position.x + 15, position.y + 10, 15*.8, 15*.8);
 
       //bottom of cannon shaft
-      //rotate(-PI/10);
       pushMatrix();
-      translate(79, 393);
+      translate(79, yStart);
       if (loaded) {
         if (mouseY < 277) {
           rotate(abs(radians(-(277))));
@@ -100,16 +99,13 @@ class Cannon {
           angle = abs(radians(-(mouseY)));
         }
       } else {
-        if (angle < radians(360) && angle != 0) {
+        if (angle < radians(360) && angle != 0) { //animate cannon down
           angle += radians(1);
           rotate(angle);
-          //println("angle1: " + angle);
         } else {
           rotate(0);
         }
       }
-      //print("rotating " + (degrees(angle)));
-
       arc(0, 0, 30*.8, 24.5, PI/2, (3*PI)/2, OPEN);
 
       //cannon shaft 
@@ -132,20 +128,19 @@ class Cannon {
 
   void load() {
     int v = 4;
-    //print("loading");
     if (flipped) {
-      //print("flipped ball");
-      ball = new Ball(new PVector(100, 0), new PVector(v, 0), new PVector(920, 392), true);
+      ball = new Ball(new PVector(100, 0), new PVector(v, 0), new PVector(920, yStart), true);
     } else {
-      ball = new Ball(new PVector(100, 0), new PVector(v, 0), new PVector(79, 393), false);
+      ball = new Ball(new PVector(100, 0), new PVector(v, 0), new PVector(79, yStart), false);
     }
-    
+
     loaded = true;
   }
 
   void fire() {
     if (ball.fired == false) {
       ball.fire(angle);
+      shotSound.trigger();
     }
   }
 }

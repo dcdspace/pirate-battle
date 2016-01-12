@@ -18,12 +18,14 @@ PImage background;
 
 Minim minim;
 AudioPlayer pearl;
+AudioSample shotSound;
+AudioSample splash;
+AudioSample hit;
+
 
 void setup() {
   size(1000, 600);
-  Ship ship1 = new Ship(new PVector (0, height - shipHeight), 200, 425, 10, 425, 30, 525, 120, 525, false);
-  Ship ship2 = new Ship(new PVector (width-250, height - shipHeight), 800, 425, 990, 425, 970, 525, 880, 525, true);
-  game = new GameController(ship1, ship2);
+  newGame();
   cursor(CROSS);
   img = loadImage("skulls.png");
   img3 = loadImage("waves2.png");
@@ -32,7 +34,11 @@ void setup() {
   minim = new Minim(this);
   pearl = minim.loadFile("piratesNew.mp3");
   pearl.loop();
+  shotSound = minim.loadSample("cannon sound.mp3");
+  splash = minim.loadSample("splash.wav");
+  hit = minim.loadSample("hit.mp3");
 }
+
 
 void draw() {
   background.resize(width, height);
@@ -44,9 +50,6 @@ void draw() {
 
   img4.resize(width/2, 150);
   image(img3, width/2, 450);
-
-
-
 
   if (!firstShot) {
     textSize(30);
@@ -63,11 +66,17 @@ void draw() {
   }
 }
 
-float truncate(float x) {
-  return round( x * 100.0f ) / 100.0f;
+void newGame() {
+  Ship ship1 = new Ship(new PVector (0, height - shipHeight), 200, 425, 10, 425, 30, 525, 120, 525, false, 375, 280, 375, 250);
+  Ship ship2 = new Ship(new PVector (width-250, height - shipHeight), 800, 425, 990, 425, 970, 525, 880, 525, true, 375, 280, 375, 250);
+  game = new GameController(ship1, ship2);
 }
 
-PVector originalVector (PVector rotated, PVector translate, float rotateAngle) {
+float truncate(float x) {
+  return round( x * 100.0f ) / 100.0f; 
+}
+
+PVector originalVector (PVector rotated, PVector translate, float rotateAngle) {//used for converting translated coordinates into original from root matrix
   return new PVector(translate.x + cos(rotateAngle) * rotated.y, (translate.y + sin(rotateAngle) * rotated.y));
 }
 
