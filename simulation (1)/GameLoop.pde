@@ -35,11 +35,7 @@ class GameController {
     text("Player 1", 10, 40);
     fill(255);
     textSize(20);
-    drawHearts(player1);
-    drawHearts(player2);
-
-
-    //text("Score: " + player1.score, 10, 75);
+    text("Score: " + player1.score, 10, 75);
     textSize(30);
     textAlign(RIGHT);
     if (player2.active) {
@@ -50,7 +46,7 @@ class GameController {
     text("Player 2", width-10, 40);
     fill(255);
     textSize(20);
-    //text("Score: " + player2.score, width - 10, 75);
+    text("Score: " + player2.score, width - 10, 75);
 
     if (player1.score == 8 || player2.score == 8) {
       textAlign(CENTER);
@@ -100,24 +96,6 @@ class GameController {
       text("Acceleration: " + accel, width/2, 20);
       text("Velocity: " + velocity, width/2, 40);
       text("Angle: " + angle + "˚", width/2, 60);
-    }
-  }
-
-  void drawHearts(Player selectedPlayer) {
-    for (int i = 0; i < selectedPlayer.ship.health; i++) {
-      int xIncrement;
-      if (selectedPlayer == player1) {
-        xIncrement = (30*(i%4));
-      } else {      
-        xIncrement = width-160+(30*(i%4));
-      }
-      int yVal;
-      if (i < 4) {
-        yVal = 60;
-      } else {
-        yVal = 90;
-      }
-      image(heart, heartX + xIncrement, yVal);
     }
   }
 
@@ -176,14 +154,15 @@ class GameController {
       currentShip.t1 += 10;
       currentShip.t2 += 10;
       currentShip.t3 += 10;
-      currentShip.health--;
     }
   }
 }
 
 
 class Player {
+  int accuracy;
   int score;
+  int lives;
   boolean active;
   Ship ship;
   Player() {
