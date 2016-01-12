@@ -15,6 +15,7 @@ PImage img2;
 PImage img3;
 PImage img4;
 PImage background;
+PImage fire;
 
 Minim minim;
 AudioPlayer pearl;

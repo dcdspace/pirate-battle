@@ -57,10 +57,20 @@ class GameController {
         textAlign(CENTER);
         text("Player 1 Won!", width/2, (height/2)-60);
         textSize(20);
+        
+        fire = loadImage("fire.png");
+        fire.resize((width/2)-20, 200);
+        image(fire, 670, 340);
+        
+        
       } else {
         textAlign(CENTER);
         text("Player 2 Won!", width/2, (height/2)-60);
         textSize(20);
+       
+        fire = loadImage("fire.png");
+        fire.resize((width/2)-20, 200);
+        image(fire, 0, 340);
       }
 
       textAlign(CENTER);
