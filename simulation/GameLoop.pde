@@ -47,31 +47,30 @@ class GameController {
     fill(255);
     textSize(20);
     text("Score: " + player2.score, width - 10, 75);
-    
-    if(player1.score == 8 ||player2.score == 8){
-    textAlign(CENTER);
-    text("Game Over!", width/2, (height/2)-80);
-    textSize(20);
-    
-    if (player1.score>player2.score){
+
+    if (player1.score == 8 || player2.score == 8) {
       textAlign(CENTER);
-    text("Player 1 Won!", width/2, (height/2)-60);
-    textSize(20);
-    }else{
-  textAlign(CENTER);
-    text("Player 2 Won!", width/2, (height/2)-60);
-    textSize(20);
+      text("Game Over!", width/2, (height/2)-80);
+      textSize(20);
+
+      if (player1.score>player2.score) {
+        textAlign(CENTER);
+        text("Player 1 Won!", width/2, (height/2)-60);
+        textSize(20);
+      } else {
+        textAlign(CENTER);
+        text("Player 2 Won!", width/2, (height/2)-60);
+        textSize(20);
+      }
+
+      textAlign(CENTER);
+      text("Press R to rematch!", width/2, (height/2)-40);
+      textSize(20);
     }
-    
-    textAlign(CENTER);
-    text("Press R to rematch!", width/2, (height/2)-40);
-    textSize(20);
-    
-    }
-    
-    
-    
-    
+
+
+
+
     textAlign(CENTER);
     int angle = int(360 - degrees(currentPlayer.ship.cannon.angle));
     if (angle == 360) {
@@ -119,13 +118,13 @@ class GameController {
     boolean hitShip = false;
     if (currentPlayer == player1) {
       currentShip = player2.ship;
-      if (currentBall.position.x >= currentShip.x1 && currentBall.position.y >= currentShip.y1 && currentBall.position.y <= currentShip.y1 + 20) {
+      if (currentBall.position.x >= currentShip.x1 && currentBall.position.x <= currentShip.x2 && currentBall.position.y >= currentShip.y1 && currentBall.position.y <= currentShip.y1 + 20) {
         println("ball position: " + currentBall.position.y);
         hitShip = true;
       }
     } else {
       currentShip = player1.ship;
-      if (currentBall.position.x <= currentShip.x1 && currentBall.position.y >= currentShip.y1 && currentBall.position.y <= currentShip.y1 + 20) {
+      if (currentBall.position.x <= currentShip.x1 && currentBall.position.x >= currentShip.x2 && currentBall.position.y >= currentShip.y1 && currentBall.position.y <= currentShip.y1 + 20) {
         hitShip = true;
       }
     }

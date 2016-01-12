@@ -73,7 +73,7 @@ void newGame() {
 }
 
 float truncate(float x) {
-  return round( x * 100.0f ) / 100.0f; 
+  return round( x * 100.0f ) / 100.0f;
 }
 
 PVector originalVector (PVector rotated, PVector translate, float rotateAngle) {//used for converting translated coordinates into original from root matrix
