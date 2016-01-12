@@ -8,6 +8,7 @@ class Ship {
   Ship(PVector shipPosition, float x1i, float y1i, float x2i, float y2i, float x3i, float y3i, float x4i, float y4i, boolean isFlipped, float t1i, float t2i, float t3i, float i1i) {
     position = shipPosition;
     flipped = isFlipped;
+    health = 8;
     x1 = x1i;
     x2 = x2i;
     x3 = x3i;

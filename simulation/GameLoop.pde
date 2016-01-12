@@ -35,7 +35,133 @@ class GameController {
     text("Player 1", 10, 40);
     fill(255);
     textSize(20);
-    text("Score: " + player1.score, 10, 75);
+
+    if (player1.ship.health == 8) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, heartX, 60);
+      image(heart, heartX +30, 60);
+      image(heart, heartX +60, 60);
+      image(heart, heartX +90, 60);
+      image(heart, heartX, 90);
+      image(heart, heartX +30, 90);
+      image(heart, heartX +60, 90);
+      image(heart, heartX +90, 90);
+    } else if (player1.ship.health == 7) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, heartX, 60);
+      image(heart, heartX +30, 60);
+      image(heart, heartX +60, 60);
+      image(heart, heartX +90, 60);
+      image(heart, heartX, 90);
+      image(heart, heartX +30, 90);
+      image(heart, heartX +60, 90);
+    } else if (player1.ship.health == 6) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, heartX, 60);
+      image(heart, heartX +30, 60);
+      image(heart, heartX +60, 60);
+      image(heart, heartX +90, 60);
+      image(heart, heartX, 90);
+      image(heart, heartX +30, 90);
+    } else if (player1.ship.health == 5) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, heartX, 60);
+      image(heart, heartX +30, 60);
+      image(heart, heartX +60, 60);
+      image(heart, heartX +90, 60);
+      image(heart, heartX, 90);
+    } else if (player1.ship.health == 4) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, heartX, 60);
+      image(heart, heartX +30, 60);
+      image(heart, heartX +60, 60);
+      image(heart, heartX +90, 60);
+    } else if (player1.ship.health == 3) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, heartX, 60);
+      image(heart, heartX +30, 60);
+      image(heart, heartX +60, 60);
+    } else if (player1.ship.health == 2) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, heartX, 60);
+      image(heart, heartX +30, 60);
+    } else if (player1.ship.health == 1) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, heartX, 60);
+    }
+
+    if (player2.ship.health == 8) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, width-130, 60);
+      image(heart, width-100, 60);
+      image(heart, width-70, 60);
+      image(heart, width-40, 60);
+      image(heart, width-130, 90);
+      image(heart, width-100, 90);
+      image(heart, width-70, 90);
+      image(heart, width-40, 90);
+    } else if (player2.ship.health == 7) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, width-130, 60);
+      image(heart, width-100, 60);
+      image(heart, width-70, 60);
+      image(heart, width-40, 60);
+      image(heart, width-130, 90);
+      image(heart, width-100, 90);
+      image(heart, width-70, 90);
+    } else if (player2.ship.health == 6) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, width-130, 60);
+      image(heart, width-100, 60);
+      image(heart, width-70, 60);
+      image(heart, width-40, 60);
+      image(heart, width-130, 90);
+      image(heart, width-100, 90);
+    } else if (player2.ship.health == 5) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, width-130, 60);
+      image(heart, width-100, 60);
+      image(heart, width-70, 60);
+      image(heart, width-40, 60);
+      image(heart, width-130, 90);
+    } else if (player2.ship.health == 4) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, width-130, 60);
+      image(heart, width-100, 60);
+      image(heart, width-70, 60);
+      image(heart, width-40, 60);
+    } else if (player2.ship.health == 3) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, width-130, 60);
+      image(heart, width-100, 60);
+      image(heart, width-70, 60);
+    } else if (player2.ship.health == 2) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, width-130, 60);
+      image(heart, width-100, 60);
+    } else if (player2.ship.health == 1) {
+      heart = loadImage("pixel heart.png");
+      heart.resize(25, 25);
+      image(heart, width-130, 60);
+    }
+
+
+    //text("Score: " + player1.score, 10, 75);
     textSize(30);
     textAlign(RIGHT);
     if (player2.active) {
@@ -46,7 +172,7 @@ class GameController {
     text("Player 2", width-10, 40);
     fill(255);
     textSize(20);
-    text("Score: " + player2.score, width - 10, 75);
+    //text("Score: " + player2.score, width - 10, 75);
 
     if (player1.score == 8 || player2.score == 8) {
       textAlign(CENTER);
@@ -154,6 +280,7 @@ class GameController {
       currentShip.t1 += 10;
       currentShip.t2 += 10;
       currentShip.t3 += 10;
+      currentShip.health--;
     }
   }
 }

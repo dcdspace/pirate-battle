@@ -9,6 +9,7 @@ import ddf.minim.ugens.*;
 GameController game;
 int shipWidth = 250;
 int shipHeight = 175;
+int heartX = 20;
 boolean firstShot = false;
 PImage img;
 PImage img2;
@@ -16,6 +17,8 @@ PImage img3;
 PImage img4;
 PImage background;
 PImage fire;
+PImage heart;
+
 
 Minim minim;
 AudioPlayer pearl;
@@ -32,6 +35,9 @@ void setup() {
   img3 = loadImage("waves2.png");
   img4 = loadImage("waves2.png");
   background = loadImage("storm.jpg");
+
+  
+  
   minim = new Minim(this);
   pearl = minim.loadFile("piratesNew.mp3");
   pearl.loop();
